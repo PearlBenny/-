@@ -95,7 +95,6 @@
         .letter { width: 100%; max-width: 380px; background: #FFFEFC; border-radius: 12px; padding: 2.5rem; box-shadow: 0 25px 50px rgba(0,0,0,0.15); transform: translateY(60px) scale(0.95); transition: all 0.7s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; overflow: visible; display: flex; flex-direction: column; }
         .letter::before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 6px; background: var(--dark-pink); border-radius: 0 12px 12px 0; }
         
-        /* صورة الزاوية في الرسالة - تم التعديل لتكون حرة على الحافة */
         .letter-corner-img { position: absolute; top: -25px; left: -25px; width: 90px; height: auto; object-fit: contain; border: none; z-index: 10; box-shadow: none; background: transparent; pointer-events: none; }
 
         .letter-popup-overlay.active .letter { transform: translateY(0) scale(1); }
@@ -133,8 +132,6 @@
         /* ==========================================
            تنسيقات الهدايا 
            ========================================== */
-
-        /* الهدية 1: Bugatti Contract - تم جعل التصميم رسمي أكثر */
         .bugatti-container { text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .bugatti-logo { width: 100px; animation: bounce 2s infinite ease-in-out; margin-bottom: -10px; z-index: 2; position: relative;}
         
@@ -147,25 +144,40 @@
         .btn-dodge { position: absolute; transition: top 0.2s ease-out, left 0.2s ease-out, transform 0.2s; font-size: 1rem; padding: 0.7rem 1.5rem; z-index: 10; left: 50%; top: 20px; transform: translateX(-50%); }
         .btn-reject { position: absolute; font-size: 1rem; padding: 0.7rem 1.5rem; bottom: 10px; left: 50%; transform: translateX(-50%); z-index: 5; background-color: #eee; border: none; color: var(--text-dark); }
         
-        /* رسالة الرفض الجديدة */
         .bugatti-result { display: none; margin-top: 30px; font-size: 1.4rem; color: var(--dark-pink); font-weight: 900; animation: pulse 1.5s infinite alternate; line-height: 1.6; }
         .bugatti-result span { font-size: 1.1rem; color: #666; display: block; margin-top: 15px; font-weight: 700; }
 
-        /* الهدية 2: العداد الزمني */
         .elegant-counter { font-size: 1.6rem; color: var(--dark-pink); font-weight: 900; margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 10px; direction: rtl; }
         .elegant-counter span { display: inline-block; padding: 8px 15px; background: #FFFEFC; border-bottom: 3px solid var(--primary-pink); border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .counter-quote { font-size: 1.3rem; color: var(--text-dark); margin-top: 10px; font-weight: 700; }
 
-        /* الهدية 3: اختبار التوافق */
         .quiz-opt { margin-bottom: 12px; font-size: 1.1rem; padding: 1rem; width: 100%; transition: all 0.3s ease; }
         .quiz-opt:not(:disabled):hover { background-color: var(--primary-pink); color: white; transform: scale(1.02); }
         
         .progress-bar-bg { width: 100%; height: 22px; background: #EFE5E6; border-radius: 15px; margin: 25px 0; overflow: hidden; position: relative; box-shadow: inset 0 3px 6px rgba(0,0,0,0.05); }
         .progress-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--primary-pink), var(--dark-pink)); transition: width 0.3s ease; border-radius: 15px; }
 
-        /* الهدية 4: صندوق الرسائل */
         .msg-display { min-height: 120px; display: flex; justify-content: center; align-items: center; padding: 20px; margin-bottom: 20px; background: #FFFEFC; border: 2px dashed var(--primary-pink); border-radius: 16px; transition: all 0.3s; width: 100%; }
         .msg-text { font-size: 1.3rem; color: var(--dark-pink); font-weight: 700; line-height: 1.6; text-align: center; opacity: 1; transition: opacity 0.3s; }
+
+        /* ==========================================
+           تنسيقات نافذة التعليق لأسئلة الاختبار
+           ========================================== */
+        #quiz-comment-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(45, 39, 40, 0.7); backdrop-filter: blur(4px);
+            z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+            display: flex; justify-content: center; align-items: center; padding: 2rem;
+        }
+        #quiz-comment-overlay.active { opacity: 1; pointer-events: auto; }
+        .quiz-comment-box {
+            background: #FFFEFC; border-radius: 16px; padding: 2.5rem 1.5rem; width: 100%; max-width: 350px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2); text-align: center;
+            font-size: 1.5rem; font-weight: 900; color: var(--dark-pink);
+            transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid var(--primary-pink);
+        }
+        #quiz-comment-overlay.active .quiz-comment-box { transform: scale(1); }
         
     </style>
 </head>
@@ -289,7 +301,7 @@
     <section id="gift-3" class="scene">
         
         <div class="card" id="quiz-step-1">
-            <h2>قديش بتعرفي نفسك؟ 🤍</h2>
+            <h2>امتحان صغير جدن عنك 👌🏻</h2>
             <p class="counter-quote" id="quiz-counter" style="margin-top: 0;">السؤال 1 / 5</p>
             
             <div class="msg-display" style="padding: 15px; margin: 10px 0;">
@@ -329,6 +341,10 @@
             <button class="btn btn-secondary btn-full" onclick="backToGifts('gift-4')">الرجوع للهدايا</button>
         </div>
     </section>
+
+    <div id="quiz-comment-overlay">
+        <div class="quiz-comment-box" id="quiz-comment-text">التعليق هنا</div>
+    </div>
 
     <script>
         const CONFIG = {
@@ -481,7 +497,6 @@
             }, 800);
         });
 
-        /* ---------------- SCENE 5: TRANSITION TO GIFTS ---------------- */
         document.getElementById('btn-go-gifts').addEventListener('click', () => {
             letterOverlay.classList.remove('active');
             setTimeout(() => {
@@ -490,8 +505,26 @@
             }, 500);
         });
 
-        /* ---------------- GIFTS NAVIGATION ---------------- */
-        function openGift(giftId) { navigateToScene('scene-gifts', giftId); }
+        /* ---------------- GIFTS NAVIGATION & RESET LOGIC ---------------- */
+        function openGift(giftId) { 
+            // ترسييت الهدايا قبل ما يفتحوا
+            if(giftId === 'gift-1') {
+                document.getElementById('bugatti-ui').style.display = 'block';
+                document.getElementById('bugatti-result').style.display = 'none';
+            } else if(giftId === 'gift-3') {
+                currentQIndex = 0;
+                score = 0;
+                document.getElementById('quiz-step-1').style.display = 'block';
+                document.getElementById('quiz-step-2').style.display = 'none';
+                document.getElementById('quiz-step-3').style.display = 'none';
+                loadQuizQuestion();
+            } else if(giftId === 'gift-4') {
+                document.getElementById('random-msg').innerText = "اضغطي على الزر لفتح أول رسالة ✨";
+                lastMsgIndex = -1;
+            }
+            navigateToScene('scene-gifts', giftId); 
+        }
+
         function backToGifts(currentGiftId) { 
             navigateToScene(currentGiftId, 'scene-gifts'); 
         }
@@ -579,14 +612,13 @@
         }
         setInterval(updateCounter, 1000); 
 
-        // -- الهدية 3: اختبار التوافق --
-        // ملاحظة لك: بتقدر تغير رقم correctIndex عشان تحدد الإجابة الصح (0 هو الخيار الأول، 1 الثاني، وهكذا).
+        // -- الهدية 3: اختبار التوافق (المعدل) --
         const quizQuestions = [
-            { q: "شو أكتر شي بروقك وبغير مزاجك؟", opts: ["أشرب قهوة برواق", "أسمع موسيقى", "أطلع أتمشى", "أنام"], correctIndex: 1 },
-            { q: "لو قدامك تذكرة سفر، وين بتختاري؟", opts: ["مكان كله طبيعة وخضار", "مدينة مليانة حيوية", "جزيرة وبحر هادي", "بفضل أضل متكورة بالبيت"], correctIndex: 0 },
-            { q: "شو أكتر صفة بتحبيها بحالك؟", opts: ["طيبة قلبي", "ذكائي وسرعة بديهتي", "عنادي الحلو", "طموحي"], correctIndex: 2 },
-            { q: "أحلى يوم ميلاد بالنسبة إلك كيف بيكون؟", opts: ["حفلة كبيرة مع الكل", "طلعة رايقة مع شخص غالي", "أقضيه لحالي وأدلع نفسي", "يوم عادي زي أي يوم"], correctIndex: 1 },
-            { q: "بكلمة وحدة، كيف بتوصفي اليوم؟", opts: ["بيجنن", "مبسوطة", "متحمسة", "حلو لأنه إلك"], correctIndex: 3 }
+            { q: "شو اكثر اشي بتحبيه منهم ؟", opts: ["هيلو كيتي", "موز بحليب", "انا ( اختاريني انا الصح )", "فراولة"], correctIndex: 2, comment: "اكثر من الباقي بشوي بس " },
+            { q: "مين اكثر وحدة بتحبيها من بنات خواتك ؟", opts: ["ايلينا", "رتيل", "مسك", "كلهم اكيد !"], correctIndex: 0, comment: "طبعا كلهم بس ايلينا بنتك ! " },
+            { q: "شو اكثر شغلة حلوة فيكِ ؟", opts: ["جمالك", "شخصيتك", "لما تتدلعي", "عنادك الحلو"], anyCorrect: true, comment: "كل اشي فيكِ حلو ليش بتجاوبي ؟ " },
+            { q: "شو في مسلسل بتحبيه ؟", opts: ["الحب الخفي", "انطلق", "عندما اطير نحوك", "الصقيع الاول"], correctIndex: 1, comment: "ترا بتذكر انه انطلق هه " },
+            { q: "مين احسن حدا عرفتيه ؟", opts: ["اكيد انت", "عبدالله", "عبود", "عبودي"], anyCorrect: true, comment: "جد ! شكرا شكرا 😻 " }
         ];
 
         let currentQIndex = 0;
@@ -627,34 +659,42 @@
                 b.style.pointerEvents = 'none';
             });
 
-            const correctIndex = quizQuestions[currentQIndex].correctIndex;
+            const qData = quizQuestions[currentQIndex];
 
-            if (selectedIndex === correctIndex) {
-                // إجابة صحيحة (أخضر)
+            // التحقق من الإجابة (إذا كان السؤال يقبل كل الإجابات أو الإجابة صحيحة)
+            if (qData.anyCorrect || selectedIndex === qData.correctIndex) {
                 clickedBtn.style.backgroundColor = '#2ed573';
                 clickedBtn.style.borderColor = '#2ed573';
                 clickedBtn.style.color = 'white';
                 score++;
             } else {
-                // إجابة خاطئة (أحمر)
+                // إجابة خاطئة
                 clickedBtn.style.backgroundColor = '#ff4757';
                 clickedBtn.style.borderColor = '#ff4757';
                 clickedBtn.style.color = 'white';
 
-                // تظليل الإجابة الصحيحة بالأخضر
-                btns[correctIndex].style.backgroundColor = '#2ed573';
-                btns[correctIndex].style.borderColor = '#2ed573';
-                btns[correctIndex].style.color = 'white';
+                // تظليل الإجابة الصحيحة إذا كان في وحدة معينة صح
+                if (qData.correctIndex !== undefined) {
+                    btns[qData.correctIndex].style.backgroundColor = '#2ed573';
+                    btns[qData.correctIndex].style.borderColor = '#2ed573';
+                    btns[qData.correctIndex].style.color = 'white';
+                }
             }
 
+            // إظهار التعليق بالنص والانتقال للسؤال اللي بعده
             setTimeout(() => {
-                const optionsContainer = document.getElementById('quiz-options-container');
-                optionsContainer.style.opacity = '0';
+                const commentOverlay = document.getElementById('quiz-comment-overlay');
+                document.getElementById('quiz-comment-text').innerText = qData.comment;
+                commentOverlay.classList.add('active');
+
                 setTimeout(() => {
-                    currentQIndex++;
-                    loadQuizQuestion();
-                }, 400);
-            }, 1500); // الانتظار لثانية ونص لرؤية النتيجة
+                    commentOverlay.classList.remove('active');
+                    setTimeout(() => {
+                        currentQIndex++;
+                        loadQuizQuestion();
+                    }, 400); // استراحة صغيرة عشان تختفي شاشة التعليق قبل لا ييجي السؤال
+                }, 2000); // مدة بقاء التعليق عالشاشة (ثانيتين)
+            }, 800); 
         }
 
         function showAnalyzingScreen() {
@@ -672,7 +712,6 @@
                     setTimeout(() => {
                         document.getElementById('quiz-step-2').style.display = 'none';
                         document.getElementById('quiz-step-3').style.display = 'flex';
-                        // عرض النتيجة النهائية
                         document.getElementById('quiz-final-score').innerText = `جبتي ${score} من ${quizQuestions.length} 🤍`;
                         createHeartsBurst();
                     }, 600);
@@ -681,7 +720,7 @@
             }, 400);
         }
 
-        // بدء الاختبار عند التحميل
+        // بدء الاختبار عند التحميل لأول مرة
         loadQuizQuestion();
 
         // -- الهدية 4: الرسائل العشوائية --
@@ -697,7 +736,7 @@
             "أنتِ نعمة كبيرة ✨", "ما في زيك اثنين بالدنيا 👑", "يارب تكون ايامك بتشبه قلبك 🌺",
             "أنتِ تستحقي كل الحب والتقدير 💌", "أيامك الحلوة لسه جاية 🛤️", "اضحكي، الدني بتساعك 🌿",
             "أنتِ فخر لكل حدا بيعرفك 💎", "الله يسعد قلبك دايماً وأبداً 🕊️",
-            "احلى واشطر مهندزة ان شاء الله", "اضحكي بحب ضحكتك 3>", "انتِ سبيسيال كل حدا بحياتك"
+            "احلى واشطر مهندسة ان شاء الله", "اضحكي بحب ضحكتك 3>", "انتِ سبيسيال كل حدا بحياتك"
         ];
         
         let lastMsgIndex = -1;
