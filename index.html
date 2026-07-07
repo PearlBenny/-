@@ -92,11 +92,11 @@
 
         .letter-popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(45, 39, 40, 0.6); backdrop-filter: blur(6px); z-index: 20; opacity: 0; pointer-events: none; transition: opacity 0.6s ease; display: flex; justify-content: center; align-items: center; padding: 1.5rem; }
         .letter-popup-overlay.active { opacity: 1; pointer-events: auto; }
-        .letter { width: 100%; max-width: 380px; background: #FFFEFC; border-radius: 12px; padding: 2.5rem; box-shadow: 0 25px 50px rgba(0,0,0,0.15); transform: translateY(60px) scale(0.95); transition: all 0.7s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; overflow: hidden; display: flex; flex-direction: column; }
-        .letter::before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 6px; background: var(--dark-pink); }
+        .letter { width: 100%; max-width: 380px; background: #FFFEFC; border-radius: 12px; padding: 2.5rem; box-shadow: 0 25px 50px rgba(0,0,0,0.15); transform: translateY(60px) scale(0.95); transition: all 0.7s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; overflow: visible; display: flex; flex-direction: column; }
+        .letter::before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 6px; background: var(--dark-pink); border-radius: 0 12px 12px 0; }
         
-        /* صورة الزاوية في الرسالة */
-        .letter-corner-img { position: absolute; top: 15px; left: 15px; width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-pink); z-index: 10; box-shadow: 0 4px 10px rgba(164, 119, 126, 0.2); }
+        /* صورة الزاوية في الرسالة - تم التعديل لتكون حرة على الحافة */
+        .letter-corner-img { position: absolute; top: -25px; left: -25px; width: 90px; height: auto; object-fit: contain; border: none; z-index: 10; box-shadow: none; background: transparent; pointer-events: none; }
 
         .letter-popup-overlay.active .letter { transform: translateY(0) scale(1); }
         .letter-header { text-align: right; font-weight: 700; color: var(--dark-pink); font-size: 1.3rem; margin-bottom: 1rem; }
@@ -134,52 +134,38 @@
            تنسيقات الهدايا 
            ========================================== */
 
-        /* الهدية 1: Bugatti Contract */
+        /* الهدية 1: Bugatti Contract - تم جعل التصميم رسمي أكثر */
         .bugatti-container { text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 15px; }
-        .bugatti-logo { width: 100px; animation: bounce 2s infinite ease-in-out; }
+        .bugatti-logo { width: 100px; animation: bounce 2s infinite ease-in-out; margin-bottom: -10px; z-index: 2; position: relative;}
         
-        .contract-box { background: #fff; border: 3px double #D4AF37; border-radius: 8px; padding: 20px; width: 100%; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .contract-title { color: #D4AF37; font-weight: 900; font-size: 1.4rem; margin-bottom: 15px; }
-        .contract-text { font-size: 1.05rem; line-height: 1.6; margin-bottom: 25px; color: #555; }
+        .contract-box { background: #FCFAFA; border: 1px solid #C2B280; border-radius: 4px; padding: 30px 20px; width: 100%; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .contract-box::before { content: ''; position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px; border: 1px solid #E5D8B0; pointer-events: none; }
+        .contract-title { color: #2C3E50; font-weight: 900; font-size: 1.5rem; margin-bottom: 20px; border-bottom: 2px solid #D4AF37; display: inline-block; padding-bottom: 5px; }
+        .contract-text { font-size: 1.05rem; line-height: 1.8; margin-bottom: 25px; color: #444; font-weight: 500; }
         
-        .evade-area { position: relative; height: 160px; width: 100%; border-top: 1px dashed #eee; padding-top: 20px; }
+        .evade-area { position: relative; height: 160px; width: 100%; border-top: 1px dashed #ccc; padding-top: 20px; }
         .btn-dodge { position: absolute; transition: top 0.2s ease-out, left 0.2s ease-out, transform 0.2s; font-size: 1rem; padding: 0.7rem 1.5rem; z-index: 10; left: 50%; top: 20px; transform: translateX(-50%); }
         .btn-reject { position: absolute; font-size: 1rem; padding: 0.7rem 1.5rem; bottom: 10px; left: 50%; transform: translateX(-50%); z-index: 5; background-color: #eee; border: none; color: var(--text-dark); }
         
-        .bugatti-result { display: none; margin-top: 30px; font-size: 1.3rem; color: #d63031; font-weight: 900; animation: pulse 1.5s infinite alternate; line-height: 1.6; }
+        /* رسالة الرفض الجديدة */
+        .bugatti-result { display: none; margin-top: 30px; font-size: 1.4rem; color: var(--dark-pink); font-weight: 900; animation: pulse 1.5s infinite alternate; line-height: 1.6; }
+        .bugatti-result span { font-size: 1.1rem; color: #666; display: block; margin-top: 15px; font-weight: 700; }
 
-        /* الهدية 2: العداد الجديد */
+        /* الهدية 2: العداد الزمني */
         .elegant-counter { font-size: 1.6rem; color: var(--dark-pink); font-weight: 900; margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 10px; direction: rtl; }
         .elegant-counter span { display: inline-block; padding: 8px 15px; background: #FFFEFC; border-bottom: 3px solid var(--primary-pink); border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .counter-quote { font-size: 1.3rem; color: var(--text-dark); margin-top: 10px; font-weight: 700; }
 
-        /* الهدية 3: اختبار التوافق والمفاجأة */
+        /* الهدية 3: اختبار التوافق */
         .quiz-opt { margin-bottom: 12px; font-size: 1.1rem; padding: 1rem; width: 100%; transition: all 0.3s ease; }
-        .quiz-opt:hover { background-color: var(--primary-pink); color: white; transform: scale(1.02); }
+        .quiz-opt:not(:disabled):hover { background-color: var(--primary-pink); color: white; transform: scale(1.02); }
         
         .progress-bar-bg { width: 100%; height: 22px; background: #EFE5E6; border-radius: 15px; margin: 25px 0; overflow: hidden; position: relative; box-shadow: inset 0 3px 6px rgba(0,0,0,0.05); }
         .progress-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--primary-pink), var(--dark-pink)); transition: width 0.3s ease; border-radius: 15px; }
-        
-        .final-image-wrapper { width: 100%; height: 250px; border-radius: 16px; overflow: hidden; margin: 15px 0; box-shadow: 0 10px 25px rgba(0,0,0,0.15); position: relative; }
-        #final-surprise-img { width: 100%; height: 100%; object-fit: cover; transform: scale(1); }
-        .zooming { animation: slowZoom 20s ease-in-out forwards alternate infinite; }
-        @keyframes slowZoom { 0% { transform: scale(1); } 100% { transform: scale(1.4); } }
-        
-        .final-text { font-size: 1.15rem; line-height: 1.7; color: var(--dark-pink); font-weight: 700; margin-bottom: 20px; text-align: center; }
-
-        .music-player { background: #FFFEFC; border: 1px solid var(--primary-pink); border-radius: 16px; padding: 25px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.05); width: 100%; }
-        .record-cover { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--dark-pink); object-fit: cover; animation: spin 8s linear infinite; animation-play-state: paused; margin-bottom: 20px; }
-        .record-cover.playing { animation-play-state: running; }
-        .player-controls { display: flex; gap: 15px; align-items: center; width: 100%; margin-top: 15px; }
-        .play-btn { background: var(--dark-pink); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; justify-content: center; align-items: center; }
-        .music-progress { flex: 1; -webkit-appearance: none; height: 6px; border-radius: 5px; background: #f0e6e8; outline: none; }
-        .music-progress::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--dark-pink); cursor: pointer; }
 
         /* الهدية 4: صندوق الرسائل */
         .msg-display { min-height: 120px; display: flex; justify-content: center; align-items: center; padding: 20px; margin-bottom: 20px; background: #FFFEFC; border: 2px dashed var(--primary-pink); border-radius: 16px; transition: all 0.3s; width: 100%; }
         .msg-text { font-size: 1.3rem; color: var(--dark-pink); font-weight: 700; line-height: 1.6; text-align: center; opacity: 1; transition: opacity 0.3s; }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
         
     </style>
 </head>
@@ -238,7 +224,7 @@
 
     <div class="letter-popup-overlay" id="letter-overlay">
         <article class="letter">
-            <img src="https://via.placeholder.com/100/E8B4B8/FFFFFF?text=صورة" alt="صورة الزاوية" class="letter-corner-img">
+            <img src="https://via.placeholder.com/150/E8B4B8/FFFFFF?text=صورة" alt="صورة الزاوية" class="letter-corner-img">
             <div class="letter-header" id="recipient-name">عزيزتي</div>
             <p class="letter-body" id="birthday-message">النص يوضع هنا.</p>
             <div class="letter-footer" id="sender-name"></div>
@@ -277,7 +263,8 @@
                 </div>
                 
                 <div class="bugatti-result" id="bugatti-result">
-                    خسارة 😓<br>خلاص بشتريلك الشركة
+                    اصلا حتى بوغاتي كلها ما تغلى عليكي
+                    <span>طيب شو رأيك المرة الجاي نجرب سيفورا ؟</span>
                 </div>
             </div>
             <button class="btn btn-secondary btn-full" onclick="backToGifts('gift-1')" style="margin-top: auto;">الرجوع للهدايا</button>
@@ -310,7 +297,7 @@
             </div>
             
             <div id="quiz-options-container" style="width: 100%; display: flex; flex-direction: column;">
-                </div>
+            </div>
             
             <button class="btn btn-secondary btn-full" onclick="backToGifts('gift-3')" style="margin-top: 20px;">الرجوع للهدايا</button>
         </div>
@@ -323,36 +310,10 @@
         </div>
 
         <div class="card" id="quiz-step-3" style="display: none; text-align: center;">
-            <h2>✨ تم اكتشاف النتيجة ✨</h2>
-            <p style="font-size: 1.2rem; line-height: 1.8; color: var(--text-dark); margin: 20px 0;">
-                بغض النظر عن إجاباتك...<br>اليوم كله إلك، وإنتِ أجمل هدية بالدنيا ❤️
+            <h2>✨ النتيجة ✨</h2>
+            <p style="font-size: 1.5rem; line-height: 1.8; color: var(--text-dark); margin: 20px 0; font-weight: bold;" id="quiz-final-score">
+                جبتي 0 من 5
             </p>
-            <button class="btn btn-primary btn-full" onclick="triggerFinalSurprise()">🎁 افتحي آخر مفاجأة</button>
-            <button class="btn btn-secondary btn-full" onclick="backToGifts('gift-3')" style="margin-top: 15px;">الرجوع للهدايا</button>
-        </div>
-
-        <div class="card" id="quiz-step-4" style="display: none;">
-            <div class="final-image-wrapper">
-                <img src="https://via.placeholder.com/600/E8B4B8/FFFFFF?text=صورتك+الجميلة" id="final-surprise-img" alt="Final Surprise">
-            </div>
-            
-            <p class="final-text">
-                يمكن هاي مجرد صفحة...<br>بس بتمنى كل ما ترجعي إلها تتذكري قديش وجودك غالي.<br>كل عام وإنتِ بألف خير يا أحلى بنت 🤍
-            </p>
-            
-            <div class="music-player">
-                <img src="https://via.placeholder.com/150/A4777E/FFFFFF?text=صورة+الغلاف" id="record" class="record-cover" alt="Cover">
-                <h3 style="margin: 0; font-size: 1.2rem;">اسم الأغنية</h3>
-                <p style="color: var(--text-muted); font-size: 0.95rem; margin: 5px 0;">اسم الفنان</p>
-                
-                <audio id="bg-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-                
-                <div class="player-controls">
-                    <button class="play-btn" onclick="toggleAudio()" id="play-btn">▶</button>
-                    <input type="range" class="music-progress" id="audio-slider" value="0" min="0" max="100" onchange="seekAudio()">
-                </div>
-            </div>
-
             <button class="btn btn-secondary btn-full" onclick="backToGifts('gift-3')" style="margin-top: 15px;">الرجوع للهدايا</button>
         </div>
         
@@ -532,13 +493,6 @@
         /* ---------------- GIFTS NAVIGATION ---------------- */
         function openGift(giftId) { navigateToScene('scene-gifts', giftId); }
         function backToGifts(currentGiftId) { 
-            // إيقاف الموسيقى إذا رجعنا من الهدية الثالثة
-            if (currentGiftId === 'gift-3') {
-                audio.pause();
-                playBtn.innerText = '▶';
-                record.classList.remove('playing');
-                if (sparklesInterval) clearInterval(sparklesInterval);
-            }
             navigateToScene(currentGiftId, 'scene-gifts'); 
         }
 
@@ -625,22 +579,18 @@
         }
         setInterval(updateCounter, 1000); 
 
-        // -- الهدية 3: اختبار التوافق والمفاجأة --
+        // -- الهدية 3: اختبار التوافق --
+        // ملاحظة لك: بتقدر تغير رقم correctIndex عشان تحدد الإجابة الصح (0 هو الخيار الأول، 1 الثاني، وهكذا).
         const quizQuestions = [
-            { q: "شو أكتر شي بروقك وبغير مزاجك؟", opts: ["أشرب قهوة برواق", "أسمع موسيقى", "أطلع أتمشى", "أنام"] },
-            { q: "لو قدامك تذكرة سفر، وين بتختاري؟", opts: ["مكان كله طبيعة وخضار", "مدينة مليانة حيوية", "جزيرة وبحر هادي", "بفضل أضل متكورة بالبيت"] },
-            { q: "شو أكتر صفة بتحبيها بحالك؟", opts: ["طيبة قلبي", "ذكائي وسرعة بديهتي", "عنادي الحلو", "طموحي"] },
-            { q: "أحلى يوم ميلاد بالنسبة إلك كيف بيكون؟", opts: ["حفلة كبيرة مع الكل", "طلعة رايقة مع شخص غالي", "أقضيه لحالي وأدلع نفسي", "يوم عادي زي أي يوم"] },
-            { q: "بكلمة وحدة، كيف بتوصفي اليوم؟", opts: ["بيجنن", "مبسوطة", "متحمسة", "حلو لأنه إلك"] }
+            { q: "شو أكتر شي بروقك وبغير مزاجك؟", opts: ["أشرب قهوة برواق", "أسمع موسيقى", "أطلع أتمشى", "أنام"], correctIndex: 1 },
+            { q: "لو قدامك تذكرة سفر، وين بتختاري؟", opts: ["مكان كله طبيعة وخضار", "مدينة مليانة حيوية", "جزيرة وبحر هادي", "بفضل أضل متكورة بالبيت"], correctIndex: 0 },
+            { q: "شو أكتر صفة بتحبيها بحالك؟", opts: ["طيبة قلبي", "ذكائي وسرعة بديهتي", "عنادي الحلو", "طموحي"], correctIndex: 2 },
+            { q: "أحلى يوم ميلاد بالنسبة إلك كيف بيكون؟", opts: ["حفلة كبيرة مع الكل", "طلعة رايقة مع شخص غالي", "أقضيه لحالي وأدلع نفسي", "يوم عادي زي أي يوم"], correctIndex: 1 },
+            { q: "بكلمة وحدة، كيف بتوصفي اليوم؟", opts: ["بيجنن", "مبسوطة", "متحمسة", "حلو لأنه إلك"], correctIndex: 3 }
         ];
 
         let currentQIndex = 0;
-        let sparklesInterval = null;
-
-        const audio = document.getElementById('bg-audio');
-        const playBtn = document.getElementById('play-btn');
-        const record = document.getElementById('record');
-        const audioSlider = document.getElementById('audio-slider');
+        let score = 0;
 
         function loadQuizQuestion() {
             if (currentQIndex >= quizQuestions.length) {
@@ -655,11 +605,11 @@
             optionsContainer.innerHTML = '';
             optionsContainer.style.opacity = '0';
 
-            quizQuestions[currentQIndex].opts.forEach(opt => {
+            quizQuestions[currentQIndex].opts.forEach((opt, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'btn btn-secondary quiz-opt';
                 btn.innerText = opt;
-                btn.onclick = () => handleOptionClick();
+                btn.onclick = () => handleOptionClick(btn, index);
                 optionsContainer.appendChild(btn);
             });
 
@@ -669,13 +619,42 @@
             }, 50);
         }
 
-        function handleOptionClick() {
-            const optionsContainer = document.getElementById('quiz-options-container');
-            optionsContainer.style.opacity = '0';
+        function handleOptionClick(clickedBtn, selectedIndex) {
+            const btns = document.querySelectorAll('.quiz-opt');
+            // تعطيل جميع الأزرار بعد الاختيار
+            btns.forEach(b => {
+                b.disabled = true;
+                b.style.pointerEvents = 'none';
+            });
+
+            const correctIndex = quizQuestions[currentQIndex].correctIndex;
+
+            if (selectedIndex === correctIndex) {
+                // إجابة صحيحة (أخضر)
+                clickedBtn.style.backgroundColor = '#2ed573';
+                clickedBtn.style.borderColor = '#2ed573';
+                clickedBtn.style.color = 'white';
+                score++;
+            } else {
+                // إجابة خاطئة (أحمر)
+                clickedBtn.style.backgroundColor = '#ff4757';
+                clickedBtn.style.borderColor = '#ff4757';
+                clickedBtn.style.color = 'white';
+
+                // تظليل الإجابة الصحيحة بالأخضر
+                btns[correctIndex].style.backgroundColor = '#2ed573';
+                btns[correctIndex].style.borderColor = '#2ed573';
+                btns[correctIndex].style.color = 'white';
+            }
+
             setTimeout(() => {
-                currentQIndex++;
-                loadQuizQuestion();
-            }, 400);
+                const optionsContainer = document.getElementById('quiz-options-container');
+                optionsContainer.style.opacity = '0';
+                setTimeout(() => {
+                    currentQIndex++;
+                    loadQuizQuestion();
+                }, 400);
+            }, 1500); // الانتظار لثانية ونص لرؤية النتيجة
         }
 
         function showAnalyzingScreen() {
@@ -693,69 +672,14 @@
                     setTimeout(() => {
                         document.getElementById('quiz-step-2').style.display = 'none';
                         document.getElementById('quiz-step-3').style.display = 'flex';
+                        // عرض النتيجة النهائية
+                        document.getElementById('quiz-final-score').innerText = `جبتي ${score} من ${quizQuestions.length} 🤍`;
                         createHeartsBurst();
                     }, 600);
                 }
                 bar.style.width = `${progress}%`;
             }, 400);
         }
-
-        function triggerFinalSurprise() {
-            const step3 = document.getElementById('quiz-step-3');
-            step3.style.transition = 'opacity 0.5s';
-            step3.style.opacity = '0';
-            
-            setTimeout(() => {
-                step3.style.display = 'none';
-                const step4 = document.getElementById('quiz-step-4');
-                step4.style.display = 'flex';
-                step4.style.opacity = '0';
-                
-                setTimeout(() => {
-                    step4.style.transition = 'opacity 1s';
-                    step4.style.opacity = '1';
-                    
-                    // تشغيل الأنيميشن للصورة
-                    document.getElementById('final-surprise-img').classList.add('zooming');
-                    
-                    // تشغيل الأغنية
-                    audio.play();
-                    playBtn.innerText = '⏸';
-                    record.classList.add('playing');
-                    
-                    // تفعيل القلوب المستمرة
-                    createHeartsBurst();
-                    sparklesInterval = setInterval(() => {
-                        if(document.getElementById('gift-3').classList.contains('active')){
-                            createHeartsBurst();
-                        } else {
-                            clearInterval(sparklesInterval);
-                        }
-                    }, 3000);
-                }, 100);
-            }, 500);
-        }
-
-        // تشغيل الموسيقى
-        function toggleAudio() {
-            if (audio.paused) {
-                audio.play();
-                playBtn.innerText = '⏸';
-                record.classList.add('playing');
-            } else {
-                audio.pause();
-                playBtn.innerText = '▶';
-                record.classList.remove('playing');
-            }
-        }
-
-        audio.addEventListener('timeupdate', () => {
-            if (!isNaN(audio.duration)) {
-                audioSlider.value = (audio.currentTime / audio.duration) * 100;
-            }
-        });
-
-        function seekAudio() { audio.currentTime = (audioSlider.value / 100) * audio.duration; }
 
         // بدء الاختبار عند التحميل
         loadQuizQuestion();
