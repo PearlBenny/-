@@ -94,6 +94,10 @@
         .letter-popup-overlay.active { opacity: 1; pointer-events: auto; }
         .letter { width: 100%; max-width: 380px; background: #FFFEFC; border-radius: 12px; padding: 2.5rem; box-shadow: 0 25px 50px rgba(0,0,0,0.15); transform: translateY(60px) scale(0.95); transition: all 0.7s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; overflow: hidden; display: flex; flex-direction: column; }
         .letter::before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 6px; background: var(--dark-pink); }
+        
+        /* صورة الزاوية في الرسالة */
+        .letter-corner-img { position: absolute; top: 15px; left: 15px; width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-pink); z-index: 10; box-shadow: 0 4px 10px rgba(164, 119, 126, 0.2); }
+
         .letter-popup-overlay.active .letter { transform: translateY(0) scale(1); }
         .letter-header { text-align: right; font-weight: 700; color: var(--dark-pink); font-size: 1.3rem; margin-bottom: 1rem; }
         .letter-body { text-align: justify; line-height: 1.8; font-size: 1.1rem; color: #5A4E50; margin-bottom: 1.5rem; }
@@ -145,77 +149,25 @@
         .bugatti-result { display: none; margin-top: 30px; font-size: 1.3rem; color: #d63031; font-weight: 900; animation: pulse 1.5s infinite alternate; line-height: 1.6; }
 
         /* الهدية 2: العداد الجديد */
-        .elegant-counter {
-            font-size: 1.6rem;
-            color: var(--dark-pink);
-            font-weight: 900;
-            margin: 20px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            direction: rtl;
-        }
-        .elegant-counter span {
-            display: inline-block;
-            padding: 8px 15px;
-            background: #FFFEFC;
-            border-bottom: 3px solid var(--primary-pink);
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
+        .elegant-counter { font-size: 1.6rem; color: var(--dark-pink); font-weight: 900; margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 10px; direction: rtl; }
+        .elegant-counter span { display: inline-block; padding: 8px 15px; background: #FFFEFC; border-bottom: 3px solid var(--primary-pink); border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .counter-quote { font-size: 1.3rem; color: var(--text-dark); margin-top: 10px; font-weight: 700; }
 
-        /* الهدية 3: الشجرة والموسيقى أفقيًا */
-        .gift-3-card { max-width: 900px !important; width: 95%; }
-        .gift3-layout { display: flex; flex-direction: row; gap: 20px; width: 100%; align-items: center; justify-content: center; margin-top: 10px; }
+        /* الهدية 3: اختبار التوافق والمفاجأة */
+        .quiz-opt { margin-bottom: 12px; font-size: 1.1rem; padding: 1rem; width: 100%; transition: all 0.3s ease; }
+        .quiz-opt:hover { background-color: var(--primary-pink); color: white; transform: scale(1.02); }
         
-        .tree-section { flex: 1.5; display: flex; justify-content: center; align-items: center; }
-        .music-section { flex: 1; }
+        .progress-bar-bg { width: 100%; height: 22px; background: #EFE5E6; border-radius: 15px; margin: 25px 0; overflow: hidden; position: relative; box-shadow: inset 0 3px 6px rgba(0,0,0,0.05); }
+        .progress-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--primary-pink), var(--dark-pink)); transition: width 0.3s ease; border-radius: 15px; }
+        
+        .final-image-wrapper { width: 100%; height: 250px; border-radius: 16px; overflow: hidden; margin: 15px 0; box-shadow: 0 10px 25px rgba(0,0,0,0.15); position: relative; }
+        #final-surprise-img { width: 100%; height: 100%; object-fit: cover; transform: scale(1); }
+        .zooming { animation: slowZoom 20s ease-in-out forwards alternate infinite; }
+        @keyframes slowZoom { 0% { transform: scale(1); } 100% { transform: scale(1.4); } }
+        
+        .final-text { font-size: 1.15rem; line-height: 1.7; color: var(--dark-pink); font-weight: 700; margin-bottom: 20px; text-align: center; }
 
-        .tree-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 420px;
-            margin: 0 auto;
-            aspect-ratio: 5 / 6;
-        }
-
-        .realistic-tree {
-            width: 100%;
-            height: 100%;
-        }
-
-        .polaroid {
-            position: absolute;
-            padding: 6px 6px 16px 6px;
-            background: #FFFEFC;
-            box-shadow: 0 8px 20px rgba(164, 119, 126, 0.25);
-            cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), z-index 0s;
-            z-index: 5;
-            border: 1px solid #F0E6E8;
-            border-radius: 2px;
-        }
-
-        .polaroid img {
-            width: clamp(50px, 12vw, 75px);
-            height: clamp(50px, 12vw, 75px);
-            object-fit: cover;
-        }
-
-        .polaroid:hover {
-            transform: translate(-50%, -10px) scale(1.35) !important;
-            z-index: 20;
-        }
-
-        /* تموضع الصور لتبدو معلقة بالضبط بنهاية الخيوط ومائلة قليلاً */
-        .p1 { left: 20%; top: 75%; transform: translateX(-50%) rotate(-6deg); }
-        .p2 { left: 80%; top: 71.6%; transform: translateX(-50%) rotate(5deg); }
-        .p3 { left: 32%; top: 56.6%; transform: translateX(-50%) rotate(-4deg); }
-        .p4 { left: 68%; top: 53.3%; transform: translateX(-50%) rotate(7deg); }
-
-        .music-player { background: #FFFEFC; border: 1px solid var(--primary-pink); border-radius: 16px; padding: 25px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+        .music-player { background: #FFFEFC; border: 1px solid var(--primary-pink); border-radius: 16px; padding: 25px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.05); width: 100%; }
         .record-cover { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--dark-pink); object-fit: cover; animation: spin 8s linear infinite; animation-play-state: paused; margin-bottom: 20px; }
         .record-cover.playing { animation-play-state: running; }
         .player-controls { display: flex; gap: 15px; align-items: center; width: 100%; margin-top: 15px; }
@@ -223,19 +175,8 @@
         .music-progress { flex: 1; -webkit-appearance: none; height: 6px; border-radius: 5px; background: #f0e6e8; outline: none; }
         .music-progress::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--dark-pink); cursor: pointer; }
 
-        @media (max-width: 768px) {
-            .gift3-layout { flex-direction: column; gap: 15px; }
-            .tree-section { width: 100%; }
-            .music-section { width: 100%; max-width: 350px; }
-        }
-
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 20px; }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-overlay img { max-width: 90%; max-height: 70vh; border: 10px solid white; border-bottom: 40px solid white; box-shadow: 0 20px 40px rgba(0,0,0,0.4); transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .modal-overlay.active img { transform: scale(1); }
-
         /* الهدية 4: صندوق الرسائل */
-        .msg-display { min-height: 120px; display: flex; justify-content: center; align-items: center; padding: 20px; margin-bottom: 20px; background: #FFFEFC; border: 2px dashed var(--primary-pink); border-radius: 16px; transition: all 0.3s; }
+        .msg-display { min-height: 120px; display: flex; justify-content: center; align-items: center; padding: 20px; margin-bottom: 20px; background: #FFFEFC; border: 2px dashed var(--primary-pink); border-radius: 16px; transition: all 0.3s; width: 100%; }
         .msg-text { font-size: 1.3rem; color: var(--dark-pink); font-weight: 700; line-height: 1.6; text-align: center; opacity: 1; transition: opacity 0.3s; }
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -297,6 +238,7 @@
 
     <div class="letter-popup-overlay" id="letter-overlay">
         <article class="letter">
+            <img src="https://via.placeholder.com/100/E8B4B8/FFFFFF?text=صورة" alt="صورة الزاوية" class="letter-corner-img">
             <div class="letter-header" id="recipient-name">عزيزتي</div>
             <p class="letter-body" id="birthday-message">النص يوضع هنا.</p>
             <div class="letter-footer" id="sender-name"></div>
@@ -309,10 +251,10 @@
             <h2>هدايا صغيرة الك!</h2>
             <p style="color: var(--text-muted); font-size: 0.9rem;">اختاري اللي بدك اياها</p>
             <div class="gifts-grid">
-                <img src="https://via.placeholder.com/300/E8B4B8/FFFFFF?text=صورة+1" class="gift-img" onclick="openGift('gift-1')" alt="هدية 1">
-                <img src="https://via.placeholder.com/300/A4777E/FFFFFF?text=صورة+2" class="gift-img" onclick="openGift('gift-2')" alt="هدية 2">
-                <img src="https://via.placeholder.com/300/E8B4B8/FFFFFF?text=صورة+3" class="gift-img" onclick="openGift('gift-3')" alt="هدية 3">
-                <img src="https://via.placeholder.com/300/A4777E/FFFFFF?text=صورة+4" class="gift-img" onclick="openGift('gift-4')" alt="هدية 4">
+                <img src="https://via.placeholder.com/300/E8B4B8/FFFFFF?text=الهدية+1" class="gift-img" onclick="openGift('gift-1')" alt="هدية 1">
+                <img src="https://via.placeholder.com/300/A4777E/FFFFFF?text=الهدية+2" class="gift-img" onclick="openGift('gift-2')" alt="هدية 2">
+                <img src="https://via.placeholder.com/300/E8B4B8/FFFFFF?text=الهدية+3" class="gift-img" onclick="openGift('gift-3')" alt="هدية 3">
+                <img src="https://via.placeholder.com/300/A4777E/FFFFFF?text=الهدية+4" class="gift-img" onclick="openGift('gift-4')" alt="هدية 4">
             </div>
         </div>
     </section>
@@ -358,75 +300,62 @@
     </section>
 
     <section id="gift-3" class="scene">
-        <div class="card gift-3-card">
-            <h2>كل غصن… يحمل ذكرى 🌳</h2>
+        
+        <div class="card" id="quiz-step-1">
+            <h2>قديش بتعرفي نفسك؟ 🤍</h2>
+            <p class="counter-quote" id="quiz-counter" style="margin-top: 0;">السؤال 1 / 5</p>
             
-            <div class="gift3-layout">
-                <div class="tree-section">
-                    <div class="tree-wrapper">
-                        <svg class="realistic-tree" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <filter id="tree-shadow" x="-20%" y="-20%" width="140%" height="140%">
-                                    <feDropShadow dx="0" dy="15" stdDeviation="15" flood-color="#A4777E" flood-opacity="0.25"/>
-                                </filter>
-                            </defs>
-                            
-                            <g filter="url(#tree-shadow)">
-                                <path d="M 230,600 C 230,450 245,350 250,300 C 255,350 270,450 270,600 Z" fill="#6b3f22"/>
-                                <path d="M 245,420 C 180,430 110,370 60,310 C 120,360 190,390 250,400 Z" fill="#6b3f22"/>
-                                <path d="M 255,400 C 320,410 390,350 440,290 C 380,340 310,370 250,380 Z" fill="#6b3f22"/>
-                                <path d="M 248,320 C 200,310 140,230 110,160 C 160,210 210,280 252,300 Z" fill="#6b3f22"/>
-                                <path d="M 252,300 C 300,290 360,220 390,150 C 340,200 290,270 248,280 Z" fill="#6b3f22"/>
-
-                                <circle cx="250" cy="220" r="120" fill="var(--primary-pink)" opacity="0.95"/>
-                                <circle cx="140" cy="270" r="80" fill="var(--dark-pink)" opacity="0.85"/>
-                                <circle cx="360" cy="250" r="85" fill="#EAD1D3" opacity="0.95"/>
-                                <circle cx="100" cy="340" r="60" fill="var(--light-pink)" opacity="0.95"/>
-                                <circle cx="400" cy="320" r="65" fill="var(--primary-pink)" opacity="0.9"/>
-                                <circle cx="190" cy="170" r="75" fill="#F4D9DB" opacity="0.95"/>
-                                <circle cx="310" cy="160" r="80" fill="var(--dark-pink)" opacity="0.85"/>
-                                <circle cx="250" cy="110" r="65" fill="var(--light-pink)"/>
-                            </g>
-
-                            <line x1="100" y1="340" x2="100" y2="450" stroke="#8A7B7E" stroke-width="2" stroke-dasharray="5,5"/>
-                            <line x1="400" y1="320" x2="400" y2="430" stroke="#8A7B7E" stroke-width="2" stroke-dasharray="5,5"/>
-                            <line x1="160" y1="240" x2="160" y2="340" stroke="#8A7B7E" stroke-width="2" stroke-dasharray="5,5"/>
-                            <line x1="340" y1="220" x2="340" y2="320" stroke="#8A7B7E" stroke-width="2" stroke-dasharray="5,5"/>
-                        </svg>
-
-                        <div class="polaroid p1" onclick="openPicModal('صورة1.jpg')">
-                            <img src="صورة1.jpg">
-                        </div>
-                        <div class="polaroid p2" onclick="openPicModal('صورة2.jpg')">
-                            <img src="صورة2.jpg">
-                        </div>
-                        <div class="polaroid p3" onclick="openPicModal('صورة3.jpg')">
-                            <img src="صورة3.jpg">
-                        </div>
-                        <div class="polaroid p4" onclick="openPicModal('صورة4.jpg')">
-                            <img src="صورة4.jpg">
-                        </div>
-                    </div>
+            <div class="msg-display" style="padding: 15px; margin: 10px 0;">
+                <div class="msg-text" id="quiz-question">جاري التحميل...</div>
+            </div>
+            
+            <div id="quiz-options-container" style="width: 100%; display: flex; flex-direction: column;">
                 </div>
+            
+            <button class="btn btn-secondary btn-full" onclick="backToGifts('gift-3')" style="margin-top: 20px;">الرجوع للهدايا</button>
+        </div>
 
-                <div class="music-section">
-                    <div class="music-player">
-                        <img src="https://via.placeholder.com/150/E8B4B8/FFFFFF?text=صورة+الأغنية" id="record" class="record-cover" alt="Cover">
-                        <h3 style="margin: 0; font-size: 1.2rem;">اسم الأغنية</h3>
-                        <p style="color: var(--text-muted); font-size: 0.95rem; margin: 5px 0;">اسم الفنان</p>
-                        
-                        <audio id="bg-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-                        
-                        <div class="player-controls">
-                            <button class="play-btn" onclick="toggleAudio()" id="play-btn">▶</button>
-                            <input type="range" class="music-progress" id="audio-slider" value="0" min="0" max="100" onchange="seekAudio()">
-                        </div>
-                    </div>
+        <div class="card" id="quiz-step-2" style="display: none;">
+            <h2>جاري تحليل الإجابات... ⏳</h2>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="quiz-progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="card" id="quiz-step-3" style="display: none; text-align: center;">
+            <h2>✨ تم اكتشاف النتيجة ✨</h2>
+            <p style="font-size: 1.2rem; line-height: 1.8; color: var(--text-dark); margin: 20px 0;">
+                بغض النظر عن إجاباتك...<br>اليوم كله إلك، وإنتِ أجمل هدية بالدنيا ❤️
+            </p>
+            <button class="btn btn-primary btn-full" onclick="triggerFinalSurprise()">🎁 افتحي آخر مفاجأة</button>
+            <button class="btn btn-secondary btn-full" onclick="backToGifts('gift-3')" style="margin-top: 15px;">الرجوع للهدايا</button>
+        </div>
+
+        <div class="card" id="quiz-step-4" style="display: none;">
+            <div class="final-image-wrapper">
+                <img src="https://via.placeholder.com/600/E8B4B8/FFFFFF?text=صورتك+الجميلة" id="final-surprise-img" alt="Final Surprise">
+            </div>
+            
+            <p class="final-text">
+                يمكن هاي مجرد صفحة...<br>بس بتمنى كل ما ترجعي إلها تتذكري قديش وجودك غالي.<br>كل عام وإنتِ بألف خير يا أحلى بنت 🤍
+            </p>
+            
+            <div class="music-player">
+                <img src="https://via.placeholder.com/150/A4777E/FFFFFF?text=صورة+الغلاف" id="record" class="record-cover" alt="Cover">
+                <h3 style="margin: 0; font-size: 1.2rem;">اسم الأغنية</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin: 5px 0;">اسم الفنان</p>
+                
+                <audio id="bg-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+                
+                <div class="player-controls">
+                    <button class="play-btn" onclick="toggleAudio()" id="play-btn">▶</button>
+                    <input type="range" class="music-progress" id="audio-slider" value="0" min="0" max="100" onchange="seekAudio()">
                 </div>
             </div>
 
-            <button class="btn btn-secondary btn-full" onclick="backToGifts('gift-3')" style="margin-top: 20px;">الرجوع للهدايا</button>
+            <button class="btn btn-secondary btn-full" onclick="backToGifts('gift-3')" style="margin-top: 15px;">الرجوع للهدايا</button>
         </div>
+        
     </section>
 
     <section id="gift-4" class="scene">
@@ -439,10 +368,6 @@
             <button class="btn btn-secondary btn-full" onclick="backToGifts('gift-4')">الرجوع للهدايا</button>
         </div>
     </section>
-
-    <div class="modal-overlay" id="pic-modal" onclick="closePicModal()">
-        <img src="" id="modal-img" alt="Zoomed">
-    </div>
 
     <script>
         const CONFIG = {
@@ -606,7 +531,16 @@
 
         /* ---------------- GIFTS NAVIGATION ---------------- */
         function openGift(giftId) { navigateToScene('scene-gifts', giftId); }
-        function backToGifts(currentGiftId) { navigateToScene(currentGiftId, 'scene-gifts'); }
+        function backToGifts(currentGiftId) { 
+            // إيقاف الموسيقى إذا رجعنا من الهدية الثالثة
+            if (currentGiftId === 'gift-3') {
+                audio.pause();
+                playBtn.innerText = '▶';
+                record.classList.remove('playing');
+                if (sparklesInterval) clearInterval(sparklesInterval);
+            }
+            navigateToScene(currentGiftId, 'scene-gifts'); 
+        }
 
         /* ---------------- FX FUNCTIONS ---------------- */
         function createConfetti() {
@@ -641,14 +575,14 @@
         }
 
         /* ==========================================
-           منطق الهدايا الأربعة
+           منطق الهدايا
            ========================================== */
 
-        // -- الهدية 1: عقد Bugatti وهروب الزر --
+        // -- الهدية 1: عقد Bugatti --
         const evadeArea = document.getElementById('evade-area');
         const btnAccept = document.getElementById('btn-accept');
 
-        function dodgeAcceptBtn(e) {
+        function dodgeAcceptBtn() {
             const areaRect = evadeArea.getBoundingClientRect();
             const btnRect = btnAccept.getBoundingClientRect();
             
@@ -673,7 +607,7 @@
             createHeartsBurst();
         }
 
-        // -- الهدية 2: العداد الزمني (أيام، ساعات، دقائق) --
+        // -- الهدية 2: العداد الزمني --
         const startDate = new Date('October 16, 2025 18:13:00 GMT+0300').getTime();
         
         function updateCounter() {
@@ -691,12 +625,118 @@
         }
         setInterval(updateCounter, 1000); 
 
-        // -- الهدية 3: الموسيقى والصور --
+        // -- الهدية 3: اختبار التوافق والمفاجأة --
+        const quizQuestions = [
+            { q: "شو أكتر شي بروقك وبغير مزاجك؟", opts: ["أشرب قهوة برواق", "أسمع موسيقى", "أطلع أتمشى", "أنام"] },
+            { q: "لو قدامك تذكرة سفر، وين بتختاري؟", opts: ["مكان كله طبيعة وخضار", "مدينة مليانة حيوية", "جزيرة وبحر هادي", "بفضل أضل متكورة بالبيت"] },
+            { q: "شو أكتر صفة بتحبيها بحالك؟", opts: ["طيبة قلبي", "ذكائي وسرعة بديهتي", "عنادي الحلو", "طموحي"] },
+            { q: "أحلى يوم ميلاد بالنسبة إلك كيف بيكون؟", opts: ["حفلة كبيرة مع الكل", "طلعة رايقة مع شخص غالي", "أقضيه لحالي وأدلع نفسي", "يوم عادي زي أي يوم"] },
+            { q: "بكلمة وحدة، كيف بتوصفي اليوم؟", opts: ["بيجنن", "مبسوطة", "متحمسة", "حلو لأنه إلك"] }
+        ];
+
+        let currentQIndex = 0;
+        let sparklesInterval = null;
+
         const audio = document.getElementById('bg-audio');
         const playBtn = document.getElementById('play-btn');
         const record = document.getElementById('record');
         const audioSlider = document.getElementById('audio-slider');
 
+        function loadQuizQuestion() {
+            if (currentQIndex >= quizQuestions.length) {
+                showAnalyzingScreen();
+                return;
+            }
+
+            document.getElementById('quiz-counter').innerText = `السؤال ${currentQIndex + 1} / 5`;
+            document.getElementById('quiz-question').innerText = quizQuestions[currentQIndex].q;
+            
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = '';
+            optionsContainer.style.opacity = '0';
+
+            quizQuestions[currentQIndex].opts.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-secondary quiz-opt';
+                btn.innerText = opt;
+                btn.onclick = () => handleOptionClick();
+                optionsContainer.appendChild(btn);
+            });
+
+            setTimeout(() => { 
+                optionsContainer.style.transition = 'opacity 0.4s'; 
+                optionsContainer.style.opacity = '1'; 
+            }, 50);
+        }
+
+        function handleOptionClick() {
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.style.opacity = '0';
+            setTimeout(() => {
+                currentQIndex++;
+                loadQuizQuestion();
+            }, 400);
+        }
+
+        function showAnalyzingScreen() {
+            document.getElementById('quiz-step-1').style.display = 'none';
+            document.getElementById('quiz-step-2').style.display = 'flex';
+            
+            let progress = 0;
+            const bar = document.getElementById('quiz-progress-fill');
+            
+            const progressInt = setInterval(() => {
+                progress += Math.random() * 15 + 10;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(progressInt);
+                    setTimeout(() => {
+                        document.getElementById('quiz-step-2').style.display = 'none';
+                        document.getElementById('quiz-step-3').style.display = 'flex';
+                        createHeartsBurst();
+                    }, 600);
+                }
+                bar.style.width = `${progress}%`;
+            }, 400);
+        }
+
+        function triggerFinalSurprise() {
+            const step3 = document.getElementById('quiz-step-3');
+            step3.style.transition = 'opacity 0.5s';
+            step3.style.opacity = '0';
+            
+            setTimeout(() => {
+                step3.style.display = 'none';
+                const step4 = document.getElementById('quiz-step-4');
+                step4.style.display = 'flex';
+                step4.style.opacity = '0';
+                
+                setTimeout(() => {
+                    step4.style.transition = 'opacity 1s';
+                    step4.style.opacity = '1';
+                    
+                    // تشغيل الأنيميشن للصورة
+                    document.getElementById('final-surprise-img').classList.add('zooming');
+                    
+                    // تشغيل الأغنية
+                    audio.play();
+                    playBtn.innerText = '⏸';
+                    record.classList.add('playing');
+                    
+                    // تفعيل القلوب المستمرة
+                    createHeartsBurst();
+                    sparklesInterval = setInterval(() => {
+                        if(document.getElementById('gift-3').classList.contains('active')){
+                            createHeartsBurst();
+                        } else {
+                            clearInterval(sparklesInterval);
+                        }
+                    }, 3000);
+                }, 100);
+            }, 500);
+        }
+
+        // تشغيل الموسيقى
         function toggleAudio() {
             if (audio.paused) {
                 audio.play();
@@ -717,24 +757,8 @@
 
         function seekAudio() { audio.currentTime = (audioSlider.value / 100) * audio.duration; }
 
-        const modal = document.getElementById('pic-modal');
-        const modalImg = document.getElementById('modal-img');
-
-        function openPicModal(imgSrc) {
-            modalImg.src = imgSrc;
-            modal.classList.add('active');
-        }
-        function closePicModal() { modal.classList.remove('active'); }
-
-        const originalBackToGifts = backToGifts;
-        backToGifts = function(currentGiftId) {
-            if (currentGiftId === 'gift-3') {
-                audio.pause();
-                playBtn.innerText = '▶';
-                record.classList.remove('playing');
-            }
-            originalBackToGifts(currentGiftId);
-        }
+        // بدء الاختبار عند التحميل
+        loadQuizQuestion();
 
         // -- الهدية 4: الرسائل العشوائية --
         const messages = [
