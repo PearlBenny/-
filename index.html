@@ -42,6 +42,7 @@
         .btn-primary { background-color: var(--dark-pink); color: white; }
         .btn-secondary { background-color: transparent; color: var(--dark-pink); border: 2px solid var(--primary-pink); }
         .btn-full { width: 100%; margin-top: 1rem; }
+        .btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none !important; }
 
         /* ==========================================
            4. INTRO SCREEN
@@ -315,7 +316,7 @@
         </div>
 
         <div class="card" id="quiz-step-2" style="display: none;">
-            <h2>جاري تحليل الإجابات... ⏳</h2>
+            <h2>خلينا نشوف كم وحدة صح 🤓</h2>
             <div class="progress-bar-bg">
                 <div class="progress-bar-fill" id="quiz-progress-fill"></div>
             </div>
@@ -323,8 +324,9 @@
 
         <div class="card" id="quiz-step-3" style="display: none; text-align: center;">
             <h2>✨ النتيجة ✨</h2>
-            <p style="font-size: 1.5rem; line-height: 1.8; color: var(--text-dark); margin: 20px 0; font-weight: bold;" id="quiz-final-score">
-                جبتي 0 من 5
+            <p style="font-size: 1.5rem; line-height: 1.8; color: var(--text-dark); margin: 20px 0 5px 0; font-weight: bold;" id="quiz-final-score">
+            </p>
+            <p style="font-size: 1.2rem; line-height: 1.5; color: var(--dark-pink); margin-bottom: 20px; font-weight: bold;" id="quiz-final-msg">
             </p>
             <button class="btn btn-secondary btn-full" onclick="backToGifts('gift-3')" style="margin-top: 15px;">الرجوع للهدايا</button>
         </div>
@@ -337,7 +339,7 @@
             <div class="msg-display">
                 <div class="msg-text" id="random-msg">اضغطي على الزر لفتح أول رسالة ✨</div>
             </div>
-            <button class="btn btn-primary btn-full" onclick="showRandomMessage()">افتحي رسالة</button>
+            <button class="btn btn-primary btn-full" id="btn-random-msg" onclick="showRandomMessage()">افتحي رسالة</button>
             <button class="btn btn-secondary btn-full" onclick="backToGifts('gift-4')">الرجوع للهدايا</button>
         </div>
     </section>
@@ -507,7 +509,6 @@
 
         /* ---------------- GIFTS NAVIGATION & RESET LOGIC ---------------- */
         function openGift(giftId) { 
-            // ترسييت الهدايا قبل ما يفتحوا
             if(giftId === 'gift-1') {
                 document.getElementById('bugatti-ui').style.display = 'block';
                 document.getElementById('bugatti-result').style.display = 'none';
@@ -616,7 +617,7 @@
         const quizQuestions = [
             { q: "شو اكثر اشي بتحبيه منهم ؟", opts: ["هيلو كيتي", "موز بحليب", "انا ( اختاريني انا الصح )", "فراولة"], correctIndex: 2, comment: "اكثر من الباقي بشوي بس " },
             { q: "مين اكثر وحدة بتحبيها من بنات خواتك ؟", opts: ["ايلينا", "رتيل", "مسك", "كلهم اكيد !"], correctIndex: 0, comment: "طبعا كلهم بس ايلينا بنتك ! " },
-            { q: "شو اكثر شغلة حلوة فيكِ ؟", opts: ["جمالك", "شخصيتك", "لما تتدلعي", "عنادك الحلو"], anyCorrect: true, comment: "كل اشي فيكِ حلو ليش بتجاوبي ؟ " },
+            { q: "شو اكثر شغلة حلوة فيكِ ؟", opts: ["جمالك", "شخصيتك", "لما تتدلعي", "عنادك الحلو"], noneCorrect: true, comment: "كل اشي فيكِ حلو ليش بتجاوبي ؟ " },
             { q: "شو في مسلسل بتحبيه ؟", opts: ["الحب الخفي", "انطلق", "عندما اطير نحوك", "الصقيع الاول"], correctIndex: 1, comment: "ترا بتذكر انه انطلق هه " },
             { q: "مين احسن حدا عرفتيه ؟", opts: ["اكيد انت", "عبدالله", "عبود", "عبودي"], anyCorrect: true, comment: "جد ! شكرا شكرا 😻 " }
         ];
@@ -653,7 +654,6 @@
 
         function handleOptionClick(clickedBtn, selectedIndex) {
             const btns = document.querySelectorAll('.quiz-opt');
-            // تعطيل جميع الأزرار بعد الاختيار
             btns.forEach(b => {
                 b.disabled = true;
                 b.style.pointerEvents = 'none';
@@ -661,19 +661,22 @@
 
             const qData = quizQuestions[currentQIndex];
 
-            // التحقق من الإجابة (إذا كان السؤال يقبل كل الإجابات أو الإجابة صحيحة)
-            if (qData.anyCorrect || selectedIndex === qData.correctIndex) {
+            // منطق السؤال الثالث اللي كله غلط
+            if (qData.noneCorrect) {
+                clickedBtn.style.backgroundColor = '#ff4757';
+                clickedBtn.style.borderColor = '#ff4757';
+                clickedBtn.style.color = 'white';
+            } 
+            else if (qData.anyCorrect || selectedIndex === qData.correctIndex) {
                 clickedBtn.style.backgroundColor = '#2ed573';
                 clickedBtn.style.borderColor = '#2ed573';
                 clickedBtn.style.color = 'white';
                 score++;
             } else {
-                // إجابة خاطئة
                 clickedBtn.style.backgroundColor = '#ff4757';
                 clickedBtn.style.borderColor = '#ff4757';
                 clickedBtn.style.color = 'white';
 
-                // تظليل الإجابة الصحيحة إذا كان في وحدة معينة صح
                 if (qData.correctIndex !== undefined) {
                     btns[qData.correctIndex].style.backgroundColor = '#2ed573';
                     btns[qData.correctIndex].style.borderColor = '#2ed573';
@@ -681,7 +684,6 @@
                 }
             }
 
-            // إظهار التعليق بالنص والانتقال للسؤال اللي بعده
             setTimeout(() => {
                 const commentOverlay = document.getElementById('quiz-comment-overlay');
                 document.getElementById('quiz-comment-text').innerText = qData.comment;
@@ -692,8 +694,8 @@
                     setTimeout(() => {
                         currentQIndex++;
                         loadQuizQuestion();
-                    }, 400); // استراحة صغيرة عشان تختفي شاشة التعليق قبل لا ييجي السؤال
-                }, 2000); // مدة بقاء التعليق عالشاشة (ثانيتين)
+                    }, 400); 
+                }, 2000); 
             }, 800); 
         }
 
@@ -712,7 +714,16 @@
                     setTimeout(() => {
                         document.getElementById('quiz-step-2').style.display = 'none';
                         document.getElementById('quiz-step-3').style.display = 'flex';
+                        
                         document.getElementById('quiz-final-score').innerText = `جبتي ${score} من ${quizQuestions.length} 🤍`;
+                        
+                        const msgEl = document.getElementById('quiz-final-msg');
+                        if (score === quizQuestions.length) {
+                            msgEl.innerText = "شطورة بيان !! جبتيهم كلهم صح مين مغششك";
+                        } else {
+                            msgEl.innerText = "اصلا انتي دايما صح عادي";
+                        }
+
                         createHeartsBurst();
                     }, 600);
                 }
@@ -720,37 +731,78 @@
             }, 400);
         }
 
-        // بدء الاختبار عند التحميل لأول مرة
         loadQuizQuestion();
 
         // -- الهدية 4: الرسائل العشوائية --
         const messages = [
-            "أتمنى يومك يضل حلو 🌸", "ابتسمي شوي، الابتسامة بتلبقلك ✨", "وجودك لحاله هدية 🎁",
-            "هاي الرسالة معمولة مخصوص إلك ❤️", "والله إنك شخص مميز جداً 🌟", "كل سنة وإنتِ بألف خير 🎉",
-            "لا تنسي تضحكي اليوم 😄", "شكراً لأنك موجودة في حياتي 💐", "أتمنى كل أحلامك تتحقق 🌠",
-            "أنتِ ألطف من الورد 🌷", "خليكِ قوية وواثقة بحالك 💪", "العالم أجمل بوجودك 🌍",
-            "قلبك الأبيض بيستاهل كل خير 🤍", "بتمنى هالسنة تكون سنة السعادة إلك 🎈",
-            "يا رب أيامك الجاية كلها فرح 🦋", "أنتِ قطعة سكر بهالحياة 🍬", "لا تخلي إشي يزعل عيونك الحلوين 👀",
-            "كل لحظة معكِ هي ذكرى حلوة 📸", "أنتِ نجمة بتضوي العتمة ⭐", "خليكِ دايماً متفائلة 🌈",
-            "بتمنى تلاقي السعادة بكل مكان بتروحي عليه 🌻", "شكراً على ضحكتك اللي بتفرح القلب 💖",
-            "أنتِ نعمة كبيرة ✨", "ما في زيك اثنين بالدنيا 👑", "يارب تكون ايامك بتشبه قلبك 🌺",
-            "أنتِ تستحقي كل الحب والتقدير 💌", "أيامك الحلوة لسه جاية 🛤️", "اضحكي، الدني بتساعك 🌿",
-            "أنتِ فخر لكل حدا بيعرفك 💎", "الله يسعد قلبك دايماً وأبداً 🕊️",
-            "احلى واشطر مهندسة ان شاء الله", "اضحكي بحب ضحكتك 3>", "انتِ سبيسيال كل حدا بحياتك"
+            "اضحكي بحب ضحكتك 3>",
+            "لا تخلي اشي يزعل عيونك الحلوين :)",
+            "ابتسمي شوي الابتسامة بتلبقلك ✨",
+            "شكرا لانك موجودة بحياتي 🌷",
+            "انعم واخف دم انتِ 🦋",
+            "انتِ نعمة كبيرة 🙏🏻",
+            "احلى واشطر مهندزة ! 📐",
+            "يارب تكون ايامك بتشبه قلبك 🤍",
+            "وجودك لحاله هدية 🎁",
+            "انتِ سبيسيال كل حدا بحياتك 🌟",
+            "حتى لو الكل ضدك ، انا دايما معك 🫂",
+            "ضحكتك احلى اشي 😍",
+            "انتِ حدا ما بتكرر 💎",
+            "لا تنسي تهتمي بحالك 🌸",
+            "اليوم لازم تضحكي كثير 😄",
+            "اتمنى اشوفك دايما مبسوطة 💖",
+            "انتِ احلى صدفة 💫",
+            "تذكري دايما انك سبيسيال ✨",
+            "ترا وجودك بفرق كثير ❤️",
+            "لا تنسي لاي درجة انتِ حلوة 🥺",
+            "مافي اثنين بيان ابدا ! 👑",
+            "ديري بالك على حالك لانك بتهميني 🌺",
+            "انتِ من الناس اللي مستحيل انساهم 💌",
+            "يارب تضل عيونك تضحك دايما 🥰",
+            "بحب اشوفك مبسوطة 🎈",
+            "شكرا لانك انتِ 🌹",
+            "لا تخافي من بكرا ، انتِ قدها 💪",
+            "الله لا يحرمني ضحكتك 🤲",
+            "كل عام وانتِ حلوة 🎂",
+            "وجودك بحياتي من الاشياء اللي بقدرها كثير 🌟",
+            "لا تنسي انك حدا بستاهل كل الحب 💗",
+            "انتِ دايما احلى من ما تتخيلي 🧚‍♀️",
+            "بتمنى اكون دايما سبب ابتسامتك 😊",
+            "كم بيان عندي انا ! 🫶",
+            "ان شاء الله انبسطي اليوم وكل يوم 🎉",
+            "الله يسعدها بيونة 🌷",
+            "الله لا يضرك احلى بيان 🧿",
+            "ولككك ما شاء الله عليكي 😻",
+            "لا تزعلي مني 3>",
+            "مهما صار مستحيل انساكي ♾️",
+            "تذكري دايما انك شطورة 🥇",
+            "اكثر حدا مميز بعرفه (: ✨"
         ];
         
         let lastMsgIndex = -1;
+        let msgTimeout;
+
         function showRandomMessage() {
             const msgBox = document.getElementById('random-msg');
+            const btn = document.getElementById('btn-random-msg');
+            
+            // عشان نمنع الضغط السريع ويخرب النص ورا بعضه
+            btn.disabled = true;
+            
             let newIndex;
             do { newIndex = Math.floor(Math.random() * messages.length); } while (newIndex === lastMsgIndex);
             lastMsgIndex = newIndex;
             
             msgBox.style.opacity = '0';
-            setTimeout(() => {
+            
+            clearTimeout(msgTimeout);
+            msgTimeout = setTimeout(() => {
                 msgBox.innerText = messages[newIndex];
                 msgBox.style.opacity = '1';
                 createHeartsBurst(); 
+                
+                // نرجع نشغل الزر بعد ما يخلص التغيير
+                setTimeout(() => { btn.disabled = false; }, 300);
             }, 300);
         }
     </script>
