@@ -617,7 +617,7 @@
         const quizQuestions = [
             { q: "شو اكثر اشي بتحبيه منهم ؟", opts: ["هيلو كيتي", "موز بحليب", "انا ( اختاريني انا الصح )", "فراولة"], correctIndex: 2, comment: "اكثر من الباقي بشوي بس " },
             { q: "مين اكثر وحدة بتحبيها من بنات خواتك ؟", opts: ["ايلينا", "رتيل", "مسك", "كلهم اكيد !"], correctIndex: 0, comment: "طبعا كلهم بس ايلينا بنتك ! " },
-            { q: "شو اكثر شغلة حلوة فيكِ ؟", opts: ["جمالك", "شخصيتك", "لما تتدلعي", "عنادك الحلو"], noneCorrect: true, comment: "كل اشي فيكِ حلو ليش بتجاوبي ؟ " },
+            { q: "شو اكثر شغلة حلوة فيكِ ؟", opts: ["جمالك", "شخصيتك", "لما تتدلعي", "عنادك الحلو"], correctIndex: 0, comment: "كل اشي فيكِ حلو ليش بتجاوبي ؟ " },
             { q: "شو في مسلسل بتحبيه ؟", opts: ["الحب الخفي", "انطلق", "عندما اطير نحوك", "الصقيع الاول"], correctIndex: 1, comment: "ترا بتذكر انه انطلق هه " },
             { q: "مين احسن حدا عرفتيه ؟", opts: ["اكيد انت", "عبدالله", "عبود", "عبودي"], anyCorrect: true, comment: "جد ! شكرا شكرا 😻 " }
         ];
@@ -786,24 +786,27 @@
             const msgBox = document.getElementById('random-msg');
             const btn = document.getElementById('btn-random-msg');
             
-            // عشان نمنع الضغط السريع ويخرب النص ورا بعضه
+            // لمنع الضغط السريع وتجنب تداخل الرسائل
             btn.disabled = true;
             
             let newIndex;
             do { newIndex = Math.floor(Math.random() * messages.length); } while (newIndex === lastMsgIndex);
             lastMsgIndex = newIndex;
             
+            // إخفاء الرسالة الحالية
             msgBox.style.opacity = '0';
             
             clearTimeout(msgTimeout);
+            
+            // تغيير النص بعد الاختفاء الكامل وإعادته للظهور
             msgTimeout = setTimeout(() => {
                 msgBox.innerText = messages[newIndex];
                 msgBox.style.opacity = '1';
                 createHeartsBurst(); 
                 
-                // نرجع نشغل الزر بعد ما يخلص التغيير
-                setTimeout(() => { btn.disabled = false; }, 300);
-            }, 300);
+                // إعادة تفعيل الزر بعد الانتهاء التام من التأثير
+                setTimeout(() => { btn.disabled = false; }, 350);
+            }, 350); // هذا الوقت يسمح للـ CSS transition إنه يخلص بدون ما تبين رسالتين فوق بعض
         }
     </script>
 </body>
